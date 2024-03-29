@@ -44,7 +44,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
             key: 'engraving',
             label: {
               type: 'custom',
-              custom: 'please add you product name with size',
+              custom: 'please add your product name with size if you selelect 2 or more product write last four letter of product and with size',
             },
             type: 'text',
             value: engraving, // Added engraving value here
