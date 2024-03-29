@@ -8,7 +8,7 @@ const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   async create(ctx) {
-    const { products, engraving } = ctx.request.body; // Added engraving here
+    const { products, engraving, phoneNumber } = ctx.request.body; // Added phoneNumber here
     try {
       const lineItems = await Promise.all(
         products.map(async (product) => {
@@ -44,17 +44,26 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
             key: 'engraving',
             label: {
               type: 'custom',
-              custom: 'please write Your product size with product name',
+              custom: 'Personalized engraving',
             },
             type: 'text',
             value: engraving, // Added engraving value here
+          },
+          {
+            key: 'phone_number',
+            label: {
+              type: 'custom',
+              custom: 'Phone Number',
+            },
+            type: 'text',
+            value: phoneNumber, // Added phoneNumber value here
           },
         ],
       });
 
       await strapi
         .service("api::order.order")
-        .create({ data: { products, stripeId: session.id, engraving } }); // Added engraving here
+        .create({ data: { products, stripeId: session.id, engraving, phoneNumber } }); // Added phoneNumber here
 
       return { stripeSession: session };
     } catch (error) {
